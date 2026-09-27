@@ -101,8 +101,8 @@ An empty manifest means the plugin has never been opened in this file.
 ### Highlights
 
 A highlight lifts part of the screen out of the phone as a floating card, with a
-shadow, and optionally frosted glass under it and a cover patch over the place it
-came from.
+shadow, and optionally frosted glass under it (then also a cover patch over the
+place it came from).
 
 - `highlights` — up to **4** per mockup. Each is either `{"node":"<layer id>"}` —
   a layer **inside the source frame** (preferred) — or `{"x", "y", "w", "h"}` in pt
@@ -111,7 +111,9 @@ came from.
   of the card in pt, as in the plugin's area picker.
 - Neighbouring areas merge into one card automatically.
 - `glass` — frosted glass under the cards (default `false`).
-- `cover` — paint over the place the card came from (default `true`).
+- `cover` — paint over the place the card came from (default `true`). Applies
+  **only together with glass**: glass blurs the element left on the screen, the
+  cover hides it. Without glass the card simply sits over its place, no cover.
 - On `replace` without `highlights` the old ones are kept (same screen only).
   `"highlights": []` removes them.
 
