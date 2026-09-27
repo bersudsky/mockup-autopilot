@@ -1,10 +1,10 @@
 # mockup-autopilot
 
-Описание механики, по которой Claude управляет плагином мокапов в Figma:
-вставляет экраны в мокапы телефона в нужных ракурсах и цветах и правит готовые
-мокапы по текстовой просьбе.
+The mechanics Claude uses to drive a Figma mockup plugin: put screens into
+phone mockups at the right angles and colours, lift parts of a screen as
+highlight cards, and edit finished mockups from a plain-text request.
 
-- `guide.md` — механика для Claude. Скилл загружает этот файл при каждом
-  запуске, поэтому изменения отсюда доходят до всех без переустановки скилла.
+- `guide.md` — the mechanics for Claude. The skill loads this file on every run,
+  so changes here reach everyone without reinstalling the skill.
 
-Сам плагин и скилл распространяются отдельно.
+The plugin and the skill are distributed separately.
