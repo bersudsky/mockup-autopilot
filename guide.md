@@ -109,6 +109,11 @@ place it came from).
   of the frame. Optional per highlight: `r` — corner radius in pt (by default the
   layer's own radius, otherwise the device's usual one), `dy` — vertical offset
   of the card in pt, as in the plugin's area picker.
+- **Leave `dy` out by default.** A card grows around its centre and can cover the
+  title of its own section; without `dy` the plugin notices this and moves the
+  card down by about 1.5 title heights (nothing moves if the title is inside the
+  highlight). Set `dy` only when the user asks for a specific offset; `"dy":0`
+  means "don't move at all".
 - Neighbouring areas merge into one card automatically.
 - `glass` — frosted glass under the cards (default `false`).
 - `cover` — paint over the place the card came from (default `true`). Applies
@@ -165,8 +170,11 @@ user.
 ```json
 {"v":1, "source":"10:62", "template":"iphone-right", "color":"<colour>",
  "fitted":false, "glass":false, "cover":true,
- "highlights":[{"x":16, "y":100, "w":370, "h":80, "r":24, "dy":0}]}
+ "highlights":[{"x":16, "y":100, "w":370, "h":80, "r":24}]}
 ```
+
+`dy` appears in a highlight only when the offset was set by hand; on `replace`
+such highlights keep it, the rest get the automatic offset again.
 
 A mockup made by the plugin is recognised by non-empty `params`, including ones
 inserted by hand. `source: null` — the design was loaded from disk; it can only
