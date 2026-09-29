@@ -101,8 +101,8 @@ An empty manifest means the plugin has never been opened in this file.
 ### Highlights
 
 A highlight lifts part of the screen out of the phone as a floating card, with a
-shadow, and optionally frosted glass under it (then also a cover patch over the
-place it came from).
+shadow, optionally frosted glass under it and optionally a cover patch over the
+place it came from.
 
 - `highlights` — up to **4** per mockup. Each is either `{"node":"<layer id>"}` —
   a layer **inside the source frame** (preferred) — or `{"x", "y", "w", "h"}` in pt
@@ -116,9 +116,12 @@ place it came from).
   means "don't move at all".
 - Neighbouring areas merge into one card automatically.
 - `glass` — frosted glass under the cards (default `false`).
-- `cover` — paint over the place the card came from (default `true`). Applies
-  **only together with glass**: glass blurs the element left on the screen, the
-  cover hides it. Without glass the card simply sits over its place, no cover.
+- `cover` — paint over the place the card came from. An independent switch:
+  it works with or without glass. If you leave it out, it follows `glass`
+  (glass blurs the element left on the screen, so glass turns the cover on);
+  on `replace` it stays as it was in the old mockup unless `glass: true` is
+  given. Set `"cover": false` with glass, or `"cover": true` without it, only
+  when the user asks.
 - On `replace` without `highlights` the old ones are kept (same screen only).
   `"highlights": []` removes them.
 
@@ -169,7 +172,7 @@ user.
 
 ```json
 {"v":1, "source":"10:62", "template":"iphone-right", "color":"<colour>",
- "fitted":false, "glass":false, "cover":true,
+ "fitted":false, "glass":false, "cover":false, "coverSolo":true,
  "highlights":[{"x":16, "y":100, "w":370, "h":80, "r":24}]}
 ```
 
