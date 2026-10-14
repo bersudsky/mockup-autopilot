@@ -38,7 +38,7 @@ manifest learns about them by itself.
 {"v":1, "plugin":"<plugin name>", "mockupHeight":1080,
  "templates":[
    {"id":"iphone-right", "device":"iphone", "angle":"right", "name":"Right 3/4",
-    "frame":[402,874], "colors":["<colour 1>","<colour 2>"], "hint":"…"}
+    "frame":[402,876], "colors":["<colour 1>","<colour 2>"], "hint":"…"}
  ]}
 ```
 
@@ -51,12 +51,15 @@ manifest learns about them by itself.
 - `hint` — optional: how people call the angle. Match the user's words
   ("front", "from the top", "three quarters left") against `angle`, `name` and
   `hint`. Not sure which template is meant — ask, listing the options by `name`.
-- `frame` — the design size in pt that the device screen is made for. It also
-  tells the device of a frame: ≈402×874 is iPhone, ≈360×780 is Android.
+- `frame` — the design size in pt that the device screen is made for (for the
+  first colour). It also tells the device of a frame: ≈402×876 is iPhone,
+  ≈360×776–780 is Android.
+- `frames` — optional: `{"<colour>": [w, h]}` for colours whose screen differs
+  slightly (rendered with another camera). The plugin fits to these by itself.
 - `colors` — colours of **this** template. The first one is the default. Sets
   may differ between templates: check the colour for each one.
-- `mockupHeight` — height of a finished mockup in pt. Width depends on the
-  angle (currently 0.53–0.6 of the height), so leave rows to the `layout` grid:
+- `mockupHeight` — height of the tallest finished mockup in pt. Width depends on the
+  angle (currently 0.4–0.5 of the height), so leave rows to the `layout` grid:
   it steps by each mockup's actual width.
 
 An empty manifest means the plugin has never been opened in this file.
@@ -143,15 +146,16 @@ visible block (a card, a button, a row), not a text label inside it.
 ### Height fitting
 
 Designs are not always drawn to the device screen: Android screens are often
-360×732 while the mockup needs 360×780. Before export the plugin fits such a
-frame: it clones it off-canvas, resizes the clone to the template's `frame`
-height (the background stretches, layers pinned to the bottom such as a tab bar
-move down), exports the clone and deletes it. **The frame in the file never
-changes.**
+360×732 or 360×800 while the mockup needs 360×776. Before export the plugin fits
+such a frame: it clones it off-canvas, resizes the clone to the template's
+`frame` height for the item's colour (the background stretches or shrinks,
+layers pinned to the bottom such as a tab bar move with the bottom edge),
+exports the clone and deletes it. **The frame in the file never changes.**
 
-Fitting applies only when the width matches the template exactly and the frame
-is up to 15% shorter. Width is never stretched; a taller frame is not cut. It is
-on by default; `"fit": false` turns it off for an item. Highlights are measured
+Fitting applies only when the width matches the template exactly and the height
+differs by up to 15% either way. Width is never stretched. The design is always
+pinned to the top of the screen. It is on by default; `"fit": false` turns it
+off for an item. Highlights are measured
 on the fitted copy, so a tab bar highlight moves down together with the tab bar.
 
 ## status — progress and result
