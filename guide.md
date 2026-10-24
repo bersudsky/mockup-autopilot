@@ -113,9 +113,9 @@ place it came from.
   layer's own radius, otherwise the device's usual one), `dy` — vertical offset
   of the card in pt, as in the plugin's area picker.
 - **Leave `dy` out by default.** A card grows around its centre and can cover the
-  title of its own section; without `dy` the plugin notices this and moves the
-  card down by about 1.5 title heights (nothing moves if the title is inside the
-  highlight). Set `dy` only when the user asks for a specific offset; `"dy":0`
+  title of its own section; without `dy` the plugin notices this and places the
+  card 8 pt under the title, never lower than the element itself (nothing moves
+  if the title is inside the highlight). Set `dy` only when the user asks for a specific offset; `"dy":0`
   means "don't move at all".
 - Every highlight is its own card, enlarged around its own centre. Areas that
   touch inside the same block (rows of one card, gap up to 24 pt) merge into one
