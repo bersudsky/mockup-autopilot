@@ -223,7 +223,7 @@ Read (page `PAGE_ID`):
 
 ```js
 const page = await figma.getNodeByIdAsync("PAGE_ID");
-await figma.setCurrentPageAsync(page);
+await page.loadAsync();               // loads the page without switching the user to it
 const g = k => figma.root.getSharedPluginData("mockupautopilot", k);
 const frames = page.children.map(n => ({ id: n.id, name: n.name, type: n.type,
   x: Math.round(n.x), y: Math.round(n.y), w: Math.round(n.width), h: Math.round(n.height),
@@ -238,14 +238,25 @@ Layers of a frame, to find a highlight (`FRAME_ID`):
 ```js
 const f = await figma.getNodeByIdAsync("FRAME_ID");
 const fb = f.absoluteBoundingBox, out = [];
-const text = n => n.type === "TEXT" ? n.characters
-  : ("findAll" in n ? n.findAll(t => t.type === "TEXT").map(t => t.characters).join(" | ") : "");
-f.findAll(n => n.visible !== false && n.absoluteBoundingBox && n.width >= 16 && n.height >= 16)
- .slice(0, 400).forEach(n => {
-   const b = n.absoluteBoundingBox;
-   out.push({ id: n.id, name: n.name, type: n.type, x: Math.round(b.x - fb.x), y: Math.round(b.y - fb.y),
-              w: Math.round(b.width), h: Math.round(b.height), text: text(n).slice(0, 80) });
- });
+// One pass over the tree: a layer's text is gathered from its children on the
+// way back, hidden layers are skipped with everything inside them.
+const walk = n => {
+  if (n.visible === false) return "";
+  const b = n.absoluteBoundingBox;
+  const rec = n !== f && b && b.width >= 16 && b.height >= 16 && out.length < 400
+    ? { id: n.id, name: n.name, type: n.type, x: Math.round(b.x - fb.x), y: Math.round(b.y - fb.y),
+        w: Math.round(b.width), h: Math.round(b.height), text: "" } : null;
+  if (rec) out.push(rec);
+  let text = n.type === "TEXT" ? n.characters : "";
+  if ("children" in n) for (const c of n.children) {
+    const t = walk(c);
+    if (t) text += (text ? " | " : "") + t;
+  }
+  text = text.slice(0, 200);
+  if (rec) rec.text = text.slice(0, 80);
+  return text;
+};
+walk(f);
 return out;
 ```
 
