@@ -117,7 +117,10 @@ place it came from.
   card down by about 1.5 title heights (nothing moves if the title is inside the
   highlight). Set `dy` only when the user asks for a specific offset; `"dy":0`
   means "don't move at all".
-- Neighbouring areas merge into one card automatically.
+- Every highlight is its own card, enlarged around its own centre. Areas that
+  touch inside the same block (rows of one card, gap up to 24 pt) merge into one
+  area, so two rows of a grid come out as one card. A card that would overlap the
+  card above it moves down under it automatically.
 - `glass` — frosted glass under the cards (default `false`).
 - `cover` — paint over the place the card came from. An independent switch:
   it works with or without glass. If you leave it out, it follows `glass`
