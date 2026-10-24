@@ -110,10 +110,12 @@ place it came from.
 - `highlights` — up to **4** per mockup. Each is either `{"node":"<layer id>"}` —
   a layer **inside the source frame** (preferred) — or `{"x", "y", "w", "h"}` in pt
   of the frame. Optional per highlight: `r` — corner radius in pt (by default the
-  layer's own radius; a layer without one, such as a row inside a card, gets a
-  radius concentric with the rounded card around it — the card's radius minus
-  the row's inset from its nearest corner, never below 0; only if there is no
-  such card, the device's usual one). Leave `r` out unless the user asks for a
+  layer's own radius; a layer without one, such as a row or a square block
+  inside a card, takes it from the rounded card around it — near a corner the
+  card's radius minus the inset from that corner, in the middle of the card the
+  card's radius minus the side inset, or the card's own radius if that inset is
+  as large; a card never comes out square; only if there is no rounded card
+  around, the device's usual one). Leave `r` out unless the user asks for a
   specific radius. `dy` — vertical offset
   of the card in pt, as in the plugin's area picker.
 - **Leave `dy` out by default.** A card grows around its centre and can cover the
