@@ -37,7 +37,7 @@ manifest learns about them by itself.
 ```json
 {"v":1, "plugin":"<plugin name>", "mockupHeight":1080,
  "templates":[
-   {"id":"iphone-right", "device":"iphone", "angle":"right", "name":"Right 3/4",
+   {"id":"iphone-right", "device":"iphone", "angle":"right", "name":"Right",
     "frame":[402,876], "colors":["<colour 1>","<colour 2>"], "hint":"…"}
  ]}
 ```
@@ -211,8 +211,9 @@ be restored on redraw — warn the user.
    frames: e.g. `y` = bottom of the lowest frame + 200.
 5. **Wait.** Read `status` every ~5 s. No status with this `id` after 15 s — the
    plugin is closed: ask the user to open it in this file (Plugins menu, or the
-   plugin's button in the right panel when nothing is selected). The request
-   waits in the file; do not rewrite it.
+   plugin's button in the right panel when nothing is selected — it opens as a
+   small widget that can stay open in a corner). The request waits in the file;
+   do not rewrite it.
 6. **Result.** `done` → check `results`, report briefly; explain errors and
    warnings and offer a fix.
 
